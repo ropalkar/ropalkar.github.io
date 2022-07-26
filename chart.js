@@ -1,15 +1,24 @@
+/* Global Constants Defined */
+
+// Setting the adaptive width and height for the svg chart 
 const windowWidth = window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth;
 const windowHeight = window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight;
 const width = windowWidth * 0.55;
 const height = windowHeight * 0.6;
+
+// Margin values for the svg chart
 const leftmargin = 80;
 const bottommargin = 60;
+
+// Radius for the circle component of the svg
 const radius = 5;
 
+// Show titles for the annotations
 const itemTitle = 'Cobra Kai';
 const itemTitle1 = 'Too Hot to Handle';
 const itemTitle2 = 'Cocomelon';
 
+// x and y scale including the domain and range values.
 const xscale = d3.scaleLog()
                     .domain([1,2000])
                     .range([0, width]);
@@ -18,8 +27,8 @@ const yscale = d3.scaleLog()
                     .domain([1,1000])
                     .range([height, 0]);
 
+/* Parses the loaded csv data and groups by year and show title */
 function parseData(netflix_data){
-    console.log("Parsing netflix data");
     var parseDate = d3.timeParse("%d/%m/%y");
     var yearFormat = d3.timeFormat('%Y');
 
@@ -39,9 +48,9 @@ function parseData(netflix_data){
                 .entries(netflix_data);
 }
 
+/* Adapter function for creating annotations for all scenes */
 function createAnnotation(data){
     var year = findCurrentYear();
-    console.log(year);
     switch(year){
         case '2020':
             renderAnnotation(data, itemTitle, 50, 200);
@@ -61,6 +70,7 @@ function createAnnotation(data){
     }
 }
 
+/* Primary function that renders the annotation for every show and year */
 function renderAnnotation(data, showTitle, x_offset, y_offset){
     var year = findCurrentYear();
     const svgId = "svg#scene"+year;
@@ -83,7 +93,6 @@ function renderAnnotation(data, showTitle, x_offset, y_offset){
             skip = true;
         }
     });
-    console.log(dataItem.value);
     
     var viewershipScore = dataItem.value.viewershipScore;
     var daysInTopTen = dataItem.value.daysInTopTen;
@@ -116,8 +125,8 @@ function renderAnnotation(data, showTitle, x_offset, y_offset){
         .call(ann);
 }
 
+/* Primary callback function for performing the filter by the show-type */
 function typeFilter() {
-    console.log("Applying type filter");
     var checkedNames = [], unCheckedNames = [];
     var svgId = "svg#scene"+findCurrentYear();
     var circles = d3.select(svgId).selectAll("circle")
@@ -151,8 +160,9 @@ function typeFilter() {
     
 }
 
+/* Primary callback function for rendering the scatter-plot chard
+Includes chart creation and axis formatting */
 function render(selection, data){
-    console.log("Rendering chart...");
 
     selection
         .append("g")
@@ -206,6 +216,7 @@ function render(selection, data){
     createAnnotation(data);
 }
 
+/* Callback function for rendering the tool-tip upon hover */
 function renderTooltip(d, i){
     var tooltip = d3.select("#tooltip");
     tooltip.transition()
@@ -227,6 +238,7 @@ function renderTooltip(d, i){
         )
 }
 
+/* Callback function for hiding the tool-tip */
 function hideTooltip(){
     var tooltip = d3.select("#tooltip");
     tooltip.transition()
@@ -234,6 +246,8 @@ function hideTooltip(){
         .style("opacity", 0) 
 }
 
+/* Primary callback function for opening the tab and generating the 
+scatter-plot chart */
 function openTab(year){
     console.log("Opening tab for year: "+year);
 
@@ -267,12 +281,12 @@ function openTab(year){
     typeFilter();
 }
 
+/* Helper function for finding the current year */
 function findCurrentYear(){
     var selectedYear;
     Array.from(document.getElementsByClassName("tablinks")).forEach((tab) => {
         if(tab.classList.contains('is-active'))
           selectedYear = tab.value;
     });
-    console.log("Found current year: "+selectedYear);
     return selectedYear;
 }
