@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <title>Narrative Project</title>
+
+        <!-- Applying stylesheet -->
+        <link rel='stylesheet' type='text/css' href='style.css'>
+
+        <!-- Applying D3 Library-->
+        <script type='text/javascript' src='https://d3js.org/d3.v5.min.js' ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js" integrity="sha512-iBAeBWWWFb8HqSBcrqcz98iIpuVH1la39dEYHtyQ/pGpeCQTQVvLJOWAuhv2Q7JSHp9k7hWA7sGxU3hHJe+tFg==" 
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
+        <!-- Applying dependent library scripts -->        
+        <script type='text/javascript' src='chart.js' ></script>
+
+    </head>
+    <body >
+        <!-- Primary chart container with scenes and filters -->
+        <div class="container">
+            <div class="flex-item" style="width: 15%;"></div><!--border: 0.5px solid;-->
+
+            <!-- Scatter-Plot Chart container -->
+            <div class="flex-item" style="width: 70%;">
+                <!-- Header container-->
+                <h2>Netflix Daily Top 10</h2>
+
+                <!-- Tabs definition with onClick callback function -->
+                <div class="tab">
+                    <button value='2020' class="tablinks" onclick="openTab('2020')" id="defaultTab">2020</button> 
+                    <button value='2021' class="tablinks" onclick="openTab('2021')" >2021</button>
+                    <button value='2022' class="tablinks" onclick="openTab('2022')" >2022</button>
+                </div>
+                <p><small></small></p>
+                <!-- Tab content -->
+                <div id='2020' class="tabcontent">
+                    <!--<h3>Year - 2020</h3>-->
+                    <svg id='scene2020' width=900 height=550 /svg> <!--style="border:1px solid black"-->
+                </div>
+                
+                <div id='2021' class="tabcontent">
+                    <svg id='scene2021' width=900 height=600 /svg>
+                </div>
+                
+                <div id='2022' class="tabcontent">
+                    <svg id='scene2022' width=900 height=600 /svg>
+                </div>
+
+                <div class="container">
+                    <div class="flex-item" style="width: 5%;"></div>
+                    <div class="flex-item" style="width: 80%;">
+                        <h3>Netflix Daily Top 10 Movie/TV Show in the United States from 2020 - Mar 2022</h3>
+                        <p>
+                            Netflix, one of the popular streaming services on the internet, offers a wide variety 
+                            of TV Shows, Movies etc. The above visualization captures the shows that have featured
+                            in the Daily-Top-10 list for all show types in the United States from the year 2020 upto
+                            March 2022.
+                        </p>
+                        <p style="background-color: ghostwhite; padding: 10px;">
+                            <i>The dataset has been sourced from kaggle open-source datasets: 
+                            <a href="https://www.kaggle.com/datasets/prasertk/netflix-daily-top-10-in-us">kaggle.com - netflix-daily-top-10-in-us</a>
+                        </i>
+                        </p>
+                        <h4>Viewership Score vs Days-In-Top-10</h4>
+                        <p>
+                            Every show that has featured in the “Daily-Top-10” list has an associated 
+                            viewership-score, number of days the show has been featured in "daily-top-10"
+                            and the rank for every day from 2020 to 2022. The number of days is incremented 
+                            by one for every day the show is featured in the "daily-top-10" list. 
+                        </p>
+                        <q>
+                            The visualization helps in identifying the most viewed and popular shows on 
+                            Netflix based on the cumulative scores across the last 3 years.
+                        </q>
+                        <p>
+                            The above visualization presents the shows in an increasing value of the parameters 
+                            and thus the most viewed and popular shows brew up towards the right in this scatter-plot 
+                            visualization which maps the maximum value of the viewership-score to the maximum number 
+                            of days a show is present in the "daily-top-10" list. The viz also provides additional 
+                            information as the show-type, the average rank of the show and Netflix release date 
+                            related details. The shows can also be filtered by the show-type, for e.g., if it is a 
+                            movie or a tv-show etc. 
+                        </p>
+                        <h4>Daily-Top-10 Hat-Trick</h4>
+                        <p>
+                            Some of the most viewed & popular Netflix shows have featured in the Daily-Top-10 list 
+                            over 3 consecutive years, from 2020 to 2022. The viewership-score and the 
+                            days-in-daily-top-10 represents the cumulative trend of the parameters over the years. 
+                            The following shows maintained a lead and 
+                            were observed to have a "Daily-Top-10" Hat-Trick across the last 3 years: 
+                            <ol>
+                                <li><i>Cocomelon</i>: A tv-show that has maintained a big lead for over 400 days, with 
+                                    a maximum viewership score of above 1400.
+                                </li>
+                                <li>
+                                    <i>Cobra Kai</i>: Another tv-show with a maximum viewership score of above 500. 
+                                </li>
+                                <li>
+                                    <i>Too Hot to Handle</i>: A Netflix Exclusive show that reached a viewership score of around 300.
+                                </li>
+                            </ol>
+                        </p>
+
+                    </div>
+                    <div class="flex-item" style="width: 10%;"></div>
+                </div>
+
+                <!--<p id="datasource"><i>SOURCE:</i> Data sourced from <a href="https://www.kaggle.com/datasets/prasertk/netflix-daily-top-10-in-us">kaggle.com - netflix-daily-top-10-in-us</a></p>-->
+            </div>
+
+            <!-- Side container with filters -->
+            <div class="flex-item" style="width: 15%;"><!--border: 0.5px solid;-->
+                <br><br><br><br><br><br><br><br><br><br>
+                <!-- 4 checkbox filters with corresponding labels -->
+                <table>
+                    <tr><td><h5>Type</h5></td></tr>
+                    <tr>
+                        <td><input class="filterCheckbox" type="checkbox" id="movieType" value="Movie" checked="true"></td>
+                        <td><label for="movieType">Movie</label></td>
+                    </tr>
+                    <tr>
+                        <td><input class="filterCheckbox" type="checkbox" id="showType" value="TV Show" checked="true"></td>
+                        <td><label for="showType">TV Show</label></td>
+                    </tr>
+                    <tr>
+                        <td><input class="filterCheckbox" type="checkbox" id="suc" value="Stand-Up Comedy" checked="true"></td>
+                        <td><label for="suc">Stand-Up Comedy</label></td>
+                    </tr>
+                    <tr>
+                        <td><input class="filterCheckbox" type="checkbox" id="concert" value="Concert/Perf" checked="true"></td>
+                        <td><label for="concert">Concert/Perf</label></td>
+                    </tr>
+                </table>
+            </div>
+            
+        </div>
+        
+
+        <!-- Defining the tooltip div container -->
+        <div id="tooltip" ></div>
+    
+        <!-- Script definitions -->
+        <script>
+            /*
+            Loads the entire csv data. Parses the data and groups by the years 
+            and title as key into the var 'ndata'
+            Clicks the default tab to be open upon page-load.
+            */
+            var ndata;
+            d3.csv('netflix-daily-top-10.csv')
+                .then(function(d) { ndata = parseData(d); } )
+                .then(function() { document.getElementById("defaultTab").click(); });
+            
+            // Defining the filter and 'typeFilter' callback function
+            d3.selectAll(".filterCheckbox").on("change", typeFilter);   
+
+        </script>
+        
+    </body>
+</html>
