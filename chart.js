@@ -268,8 +268,6 @@ function openTab(year){
     // Show the current tab
     document.getElementById(year).style.display = "block";
 
-    
-  
     // Firing up the function to create the scatterplot
     //createScatterPlot(ndata, year);
     var svgId = "svg#scene"+year;
